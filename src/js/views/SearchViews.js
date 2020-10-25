@@ -11,11 +11,9 @@ export const clearInput=()=>{
 
 export const highlightSelected=(id)=>{
     document.querySelectorAll('.results__link').forEach(el=>el.classList.remove('results__link--active'));
-    document.querySelector(`a[href*="${id}"]`).classList.add('results__link--active');
+    document.querySelector(`.results__link[href*="${id}"]`).classList.add('results__link--active');
 }
-
 /* 
-
       Algorithm for shortening title
 
 1.The limitRecipeTitle () takes in two parameters ie the actual title and an es6 default parameter of 17;
@@ -26,7 +24,7 @@ export const highlightSelected=(id)=>{
     c)If the accumulated value plus the current value length is less than the limit,we push the current word value to an array of newTitle
     d)In case of vice versa,we return the newTitle that has already been pushed to our new array suffixed with ... dots
 */
-const limitRecipeTitle=(title,limit=17)=>{
+export const limitRecipeTitle=(title,limit=17)=>{
     const newTitle=[];
     if(title.length > limit){
         title.split(" ").reduce((acc,cur)=>{

@@ -10,7 +10,6 @@ import { renderItem, deleteItems, clearList } from "./views/listView";
 import Likes from "./models/likes";
 import { ToggleLikeBtn, likeMenu, renderLikes, deleteLikes } from "./views/likeViews";
 const state={};
-window.state=state;
 const  controllSearch= async ()=>{
     //1.get the query entered from the view
     const query=searchView.getInput();
@@ -119,11 +118,14 @@ elements.shopping.addEventListener('click',e=>{
     }
 })
 
+
+ 
+
 /* Like CONTROLLER */
 
-//testing purposes
- state.likes=new Likes();
- 
+
+
+//state.likes=new Likes(); 
 const controlLike=()=>{
     if(!state.likes) state.likes=new Likes();
     const currentId=state.recipe.id;
@@ -131,8 +133,9 @@ const controlLike=()=>{
     //User HAS not liked the recipe
     if(!state.likes.isLiked(currentId)){
         //add the liked recipe to state
-        state.likes.addLike(currentId,state.recipe.title,state.recipe.author,state.recipe.img);
+        const newLikes=state.likes.addLike(currentId,state.recipe.title,state.recipe.author,state.recipe.img);
         ToggleLikeBtn(true);
+        renderLikes(newLikes);
     }
     else{
         //remove liked item from state
@@ -141,8 +144,22 @@ const controlLike=()=>{
         //toggle the button
         deleteLikes(currentId);
     }
-    likeMenu(state.likes.getNumOfLikes());
+  
 }
+
+
+/* ON PAGE LOAD */
+window.addEventListener('load',()=>{
+    //initialize a like object on windows load
+    state.likes=new Likes();
+    //then fill the likes object with the loacal likes
+    state.likes.getStorage();
+    //toggle the menu depending on either there are objects
+    likeMenu(state.likes.getNumOfLikes());
+    //loop over the likes in lstorage and display them
+    state.likes.likes.forEach(like=>renderLikes(like))
+})
+
 elements.recipe.addEventListener('click',e=>{
     if(e.target.matches('.btn-decrease , .btn-decrease *')){
         //do something
