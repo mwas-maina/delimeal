@@ -11,7 +11,7 @@ export default class Search{
             this.results=res.data.recipes;
             //console.log(results);
         } catch (error) {
-            swal(`There was an error in fetching the data,${error.message}`);
+            swal(`There was a server error in fetching the data,${error.message}`);
             
         }
         
