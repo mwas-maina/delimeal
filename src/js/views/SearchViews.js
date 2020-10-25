@@ -9,6 +9,11 @@ export const clearInput=()=>{
     elements.seachResPages.innerHTML="";
 }
 
+export const highlightSelected=(id)=>{
+    document.querySelectorAll('.results__link').forEach(el=>el.classList.remove('results__link--active'));
+    document.querySelector(`a[href*="${id}"]`).classList.add('results__link--active');
+}
+
 /* 
 
       Algorithm for shortening title

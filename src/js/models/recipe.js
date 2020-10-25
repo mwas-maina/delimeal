@@ -1,7 +1,4 @@
 import axios from 'axios';
-
-
-
 export default class Recipe{
     constructor(id){
         this.id=id;
@@ -14,7 +11,7 @@ export default class Recipe{
             this.url=res.data.recipe.source_url;
             this.ingredients=res.data.recipe.ingredients;
             this.title=res.data.recipe.title; 
-            console.log(res);
+            //console.log(res);
         } catch (error) {
             console.log(error) 
         }
@@ -89,4 +86,17 @@ export default class Recipe{
         });
         this.ingredients=newIngridients;
     }
+
+    updateServings(type){
+        const newServings=type==='dec' ? this.servings -1 :this.servings + 1;
+
+        //ingridents
+        this.ingredients.forEach(ing=>{
+            ing.count= ing.count*(newServings / this.servings);
+        })
+
+        this.servings=newServings;
+
+    }
+
 }
